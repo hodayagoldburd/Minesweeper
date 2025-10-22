@@ -1,12 +1,24 @@
+body {
+  background-color: bisque;
+}
+
+h1 {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+}
 
 table {
   border-collapse: collapse;
   margin: 20px auto;
 }
 
-td {
+td.cell {
   width: 40px;
   height: 40px;
   border: 1px solid #333;
   background-color: #ccc;
+}
+
+.revealed {
+  background-color: burlywood;
 }

@@ -15,6 +15,7 @@ var gGame = {
     secsPassed: 0
 }
 
+var gMinesLeftCount = 0
 
 function onInit() {
     buildBoard()
@@ -35,18 +36,17 @@ function buildBoard() {
             }
         }
     }
-    setMines(board, gLevel.MINES)
-    setMinesNegsCount(board)
     console.table(board)
     gBoard = board
 }
 
-function setMines(board, mineCount) {
+function setMines(board, mineCount, cellToExclude = null) {
 
     var emptyCells = []
 
     for (var i = 0; i < board.length; i++) {
         for (var j = 0; j < board[i].length; j++) {
+            if (cellToExclude && i === cellToExclude.i && j === cellToExclude.j) continue
             emptyCells.push({ i, j })
         }
     }
@@ -56,6 +56,8 @@ function setMines(board, mineCount) {
         const minePosition = emptyCells.splice(randomIdx, 1)[0]
 
         board[minePosition.i][minePosition.j].isMine = true
+        gMinesLeftCount = mineCount
+        console.log(gMinesLeftCount)
     }
 }
 
@@ -90,8 +92,7 @@ function renderBoard(board) {
     for (var i = 0; i < board.length; i++) {
         strHTML += '<tr>'
         for (var j = 0; j < board[i].length; j++) {
-            strHTML += `<td class="cell" onclick="onCellClicked(this, ${i}, ${j})"
-            oncontextmenu="onCellMarked(this, ${i}, ${j}); return false;">
+            strHTML += `<td class="cell" data-i="${i}" data-j="${j}">
                         </td>`
         }
         strHTML += '</tr>'
@@ -99,13 +100,65 @@ function renderBoard(board) {
     strHTML += '</tbody></table>'
     const elContainer = document.querySelector('.board-container')
     elContainer.innerHTML = strHTML
+
+    var allCells = elContainer.querySelectorAll('.cell')
+
+    for (var k = 0; k < allCells.length; k++) {
+    var cellElement = allCells[k];
+    (function(el, i, j){
+        el.onclick = function() { onCellClicked(el, i, j); };
+        el.oncontextmenu = function(event){
+            event.preventDefault()
+            onCellMarked(el, i, j)
+        }
+    })(cellElement, +cellElement.dataset.i, +cellElement.dataset.j);
+}
 }
 
 function onCellClicked(elCell, i, j) {
 
+    // if (!gGame.isOn) return
+    if (gFirstClick) {
+        gFirstClick = false
+        gGame.isOn = true
+
+        setMines(gBoard, gLevel.MINES, { i, j })
+        setMinesNegsCount(gBoard)
+            console.table(gBoard)
+
+    }
+    cellReveal(elCell, i, j)
+}
+
+function cellReveal(elCell, i, j) {
+
+    var cell = gBoard[i][j]
+    if (cell.isShown || cell.isMarked) return
+    cell.isShown = true
+
+    if (cell.isMine) {
+        elCell.innerText = '💣'
+    }
+    else if (cell.minesAroundCount > 0) {
+        elCell.innerText = cell.minesAroundCount
+    }
+    else {
+        elCell.innerText = ''
+    }
+    elCell.classList.add('revealed')
 }
 
 function onCellMarked(elCell, i, j) {
+
+    var cell = gBoard[i][j]
+    if (cell.isShown) return
+
+    cell.isMarked = !cell.isMarked
+    if (cell.isMarked){
+        elCell.innerText = '🚩'
+    } else {
+        elCell.innerText = ''
+    }
 
 }
 
