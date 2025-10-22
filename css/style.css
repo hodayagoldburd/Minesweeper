@@ -19,6 +19,63 @@ td.cell {
   background-color: #ccc;
 }
 
-.revealed {
-  background-color: burlywood;
+td.cell.exploded {
+  background-color: red !important;
+}
+
+td.cell.revealed {
+  background-color: burlywood !important;
+}
+
+#smiley {
+  max-width: 36px;  
+  max-height: 36px; 
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 6px;
+  display: block;
+  margin: 40px auto; 
+  transition: transform 0.15s ease;
+}
+
+.level-btns-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  margin-top: 20px;
+}
+
+.choose-difficulty-header {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif; 
+  font-size: 1.5em;  
+  font-weight: 500;
+  color: #222;
+  margin-bottom: 12px;
+}
+
+.difficulty-level-btns {
+  display: flex;
+  gap: 16px; 
+}
+
+.difficulty-level-btns button {
+  background-color: #c8e9f0; 
+  color: #222;
+  border: 1px solid black;
+  border-radius: 12px; 
+  padding: 12px 24px;   
+  font-size: 16px;
+  font-family: Arial, sans-serif;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+
+.difficulty-level-btns button:hover {
+  transform: scale(1.05);
+  filter: brightness(1.1);
 }

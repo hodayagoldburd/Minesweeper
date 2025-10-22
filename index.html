@@ -11,7 +11,20 @@
 <body onload="onInit()">
 <h1>Minesweeper</h1>
 
+<img id="smiley" src="images/neutral.jpg" alt="smiley" onclick="smileyClicked()" />   
+
 <div class="board-container"></div>
+
+
+<div class="level-btns-container">
+  <h2 class="choose-difficulty-header">Choose game difficulty level</h2>
+
+  <div class="difficulty-level-btns">
+    <button class="btn-beginner" onclick="setDifficulty('beginner')">Beginner</button>
+    <button class="btn-medium" onclick="setDifficulty('medium')">Medium</button>
+    <button class="btn-expert" onclick="setDifficulty('expert')">Expert</button>
+  </div>
+</div>
 
 
     <script src="js/util.js"></script>
