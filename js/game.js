@@ -2,6 +2,7 @@
 
 var gBoard = []
 var gFirstClick = true
+const gLabel = document.getElementById('lives-label')
 
 var gLevel = {
     SIZE: 4,
@@ -15,13 +16,15 @@ var gGame = {
     secsPassed: 0,
     isGameOver: false
 }
-
+var gLives = 3
 var gSmiley = null
 var gMinesLeftCount = 0
+
 
 function onInit() {
     buildBoard()
     renderBoard(gBoard)
+    resetHintsPanel()
 }
 
 function buildBoard() {
@@ -60,6 +63,7 @@ function setMines(board, mineCount, cellToExclude = null) {
         board[minePosition.i][minePosition.j].isMine = true
         gMinesLeftCount = mineCount
         console.log(gMinesLeftCount)
+        updateMinesLeftDisplay()
     }
 }
 
@@ -90,6 +94,12 @@ function setMinesNegsCount(board) {
 
 
 function renderBoard(board) {
+
+    gLives = 3
+    console.log('lives left:', gLives)
+    livesDisplayUpdate()
+    resetHintsPanel()
+
     var strHTML = '<table><tbody>'
     for (var i = 0; i < board.length; i++) {
         strHTML += '<tr>'
@@ -127,15 +137,28 @@ function setDifficulty(level) {
     } else if (level === 'expert') {
         gLevel.SIZE = 12
         gLevel.MINES = 32
+    } else if (level === 'custom'){
+        gLevel.SIZE = +prompt('Choose a board size:')
+        gLevel.MINES = +prompt('How many mines to place?')
+        if (gLevel.MINES >= gLevel.SIZE || gLevel.SIZE === 1 || !gLevel.MINES) return
     }
+    gMinesLeftCount = gLevel.MINES
+    updateMinesLeftDisplay()
+    resetHintsPanel()
 
     gFirstClick = true
     gGame.isOn = false
+    // updateSmiley('neutral')
     onInit()
 }
 
 function onCellClicked(elCell, i, j) {
     if (gGame.isGameOver) return
+    if (gIsHintMode && gHintsCounter > 0){
+        gIsHintMode = false
+        showHint(i, j)
+        return
+    }
     if (gFirstClick) {
         gFirstClick = false
         gGame.isOn = true
@@ -144,10 +167,32 @@ function onCellClicked(elCell, i, j) {
         setMinesNegsCount(gBoard)
         console.table(gBoard)
 
+
     }
     cellReveal(elCell, i, j)
     checkGameOver()
 }
+
+function livesDisplayUpdate() {
+    const heartsContainer = document.getElementById('lives-hearts')
+    if (gLives === 0) {
+        gLabel.innerText = "No lives left"
+        heartsContainer.style.display = "none"
+    } else {
+        gLabel.innerText = "Lives left:"
+        heartsContainer.style.display = "flex"
+    }
+    const heartImages = heartsContainer.querySelectorAll('.heart')
+
+    for (var i = 0; i < heartImages.length; i++) {
+        if (i < gLives) {
+            heartImages[i].style.display = 'inline-block'
+        } else {
+            heartImages[i].style.display = 'none'
+        }
+    }
+}
+
 
 function cellReveal(elCell, i, j) {
 
@@ -156,15 +201,29 @@ function cellReveal(elCell, i, j) {
     cell.isShown = true
 
     if (cell.isMine) {
-        elCell.innerText = '💣'
+        if (gLives > 0) {
+            elCell.innerText = '💣'
+            gLives--
+            console.log('lives left:', gLives)
+            livesDisplayUpdate()
+            setTimeout(() => {
+                elCell.innerText = ''
+            }, 1500)
+            cell.isShown = false
+            return
 
-        elCell.classList.add('exploded')
-        gGame.isGameOver = true
-        allMinesReveal(i, j)
-        updateSmiley('sad')
-        console.log('Game over')
+        } else {
+            elCell.classList.add('exploded')
+            elCell.innerText = '💣'
 
-        return
+            gGame.isGameOver = true
+            allMinesReveal(i, j)
+            updateSmiley('sad')
+            console.log('Game over')
+            gLabel.innerText = "Game over.... Try again!"
+
+            return
+        }
     }
     else if (cell.minesAroundCount > 0) {
         elCell.innerText = cell.minesAroundCount
@@ -199,15 +258,27 @@ function onCellMarked(elCell, i, j) {
     var cell = gBoard[i][j]
     if (cell.isShown) return
 
+    if (!cell.isMarked && gMinesLeftCount === 0) return
+
     cell.isMarked = !cell.isMarked
     if (cell.isMarked) {
         elCell.innerText = '🚩'
         gMinesLeftCount--
+        checkGameOver()
         console.log('mines left: ', gMinesLeftCount)
+        updateMinesLeftDisplay()
     } else {
         elCell.innerText = ''
+        gMinesLeftCount++
+        console.log('mines left: ', gMinesLeftCount)
+        updateMinesLeftDisplay()
     }
 
+}
+
+function updateMinesLeftDisplay() {
+    const elMinesLeft = document.getElementById('mines-left-number')
+    elMinesLeft.innerText = `${gMinesLeftCount}`
 }
 
 function checkGameOver() {
@@ -228,6 +299,7 @@ function checkGameOver() {
 
         updateSmiley('happy')
         console.log('You won!')
+        gLabel.innerText = "You won!"
     }
 }
 

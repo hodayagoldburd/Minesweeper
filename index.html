@@ -2,33 +2,61 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minesweeper</title>
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minesweeper</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body onload="onInit()">
-<h1>Minesweeper</h1>
+  <h1>Minesweeper</h1>
 
-<img id="smiley" src="images/neutral.jpg" alt="smiley" onclick="smileyClicked()" />   
+  <img id="smiley" src="images/neutral.jpg" alt="smiley" onclick="smileyClicked()" />
 
-<div class="board-container"></div>
+  <div class="game-wrapper">
+    <div class="left-panel">
+      <!-- for the bonus -->
+      <button class="btn-hint" onclick="giveHint(event)">Hint</button>
+      <div class="hint-lights">
+        <img src="images/hint-on.png" class="hint-light">
+        <img src="images/hint-on.png" class="hint-light">
+        <img src="images/hint-on.png" class="hint-light">
+      </div>
+    </div>
 
+    <div class="board-container"></div>
 
-<div class="level-btns-container">
-  <h2 class="choose-difficulty-header">Choose game difficulty level</h2>
+    <div class="right-panel">
+      <div class="lives-container">
+        <div class="lives-label" id="lives-label">Lives</div>
+        <div class="lives-hearts" id="lives-hearts">
+          <img src="images/heart.png" class="heart">
+          <img src="images/heart.png" class="heart">
+          <img src="images/heart.png" class="heart">
+        </div>
+      </div>
 
-  <div class="difficulty-level-btns">
-    <button class="btn-beginner" onclick="setDifficulty('beginner')">Beginner</button>
-    <button class="btn-medium" onclick="setDifficulty('medium')">Medium</button>
-    <button class="btn-expert" onclick="setDifficulty('expert')">Expert</button>
+      <div id="mines-left-container" class="mines-left-container">
+        Mines left: <span id="mines-left-number">2</span>
+      </div>
+    </div>
   </div>
-</div>
+
+  <div class="level-btns-container">
+    <h2 class="choose-difficulty-header">Choose game difficulty level:</h2>
+
+    <div class="difficulty-level-btns">
+      <button class="btn-beginner" onclick="setDifficulty('beginner')">Beginner</button>
+      <button class="btn-medium" onclick="setDifficulty('medium')">Medium</button>
+      <button class="btn-expert" onclick="setDifficulty('expert')">Expert</button>
+      <button class="btn-custom" onclick="setDifficulty('custom')">Custom</button>
+    </div>
+  </div>
 
 
-    <script src="js/util.js"></script>
-    <script src="js/game.js"></script>
+  <script src="js/util.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/hints.js"></script>
 </body>
 
 </html>
