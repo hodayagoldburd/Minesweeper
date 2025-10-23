@@ -15,18 +15,24 @@
 
   <div class="game-wrapper">
     <div class="left-panel">
-      <!-- for the bonus -->
+
+      <button class="btn-safe-click" onclick="safeClick()">Safe clicks left: 3</button>
       <button class="btn-hint" onclick="giveHint(event)">Hint</button>
       <div class="hint-lights">
         <img src="images/hint-on.png" class="hint-light">
         <img src="images/hint-on.png" class="hint-light">
         <img src="images/hint-on.png" class="hint-light">
       </div>
+      <button id="exterminatorBtn" class="exterminatorBtn" onclick="exterminator()">Exterminator</button>
+      <button id="darkModeBtn" class="darkModeBtn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
     </div>
 
     <div class="board-container"></div>
 
     <div class="right-panel">
+      <div class="timer-container">
+        Timer: <span id="timer">0</span>
+      </div>
       <div class="lives-container">
         <div class="lives-label" id="lives-label">Lives</div>
         <div class="lives-hearts" id="lives-hearts">
@@ -52,11 +58,26 @@
       <button class="btn-custom" onclick="setDifficulty('custom')">Custom</button>
     </div>
   </div>
+<div class="best-times">
+  <p class="best-title">Best times:</p>
+  <div class="best-row">
+    <span>Beginner: <span id="bestTime_beginner">-</span>s</span>
+    <span>Medium: <span id="bestTime_medium">-</span>s</span>
+    <span>Expert: <span id="bestTime_expert">-</span>s</span>
+  </div>
+</div>
+  <h3>Hodaya Goldburd.</h3>
 
 
   <script src="js/util.js"></script>
+  <script src="js/board.js"></script>
   <script src="js/game.js"></script>
+  <script src="js/mines.js"></script>
+  <script src="js/smiley.js"></script>
+  <script src="js/timer.js"></script>
   <script src="js/hints.js"></script>
+  <script src="js/safe-click.js"></script>
+  <script src="js/exterminator.js"></script>
 </body>
 
 </html>

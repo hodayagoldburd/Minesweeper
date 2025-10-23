@@ -6,7 +6,7 @@ var gIsHintMode = false
 
 function giveHint(ev) {
 
-    if (!gIsHintsAvailable || gGame.isGameOver) return
+    if (!gIsHintsAvailable || gGame.isGameOver || !gGame.isOn) return
     // ev.stopPropagation()
     // ev.preventDefault()
     gIsHintMode = true
@@ -26,7 +26,7 @@ function giveHint(ev) {
         gIsHintsAvailable = false
         var elHintBtn = document.querySelector('.btn-hint')
         elHintBtn.disabled = true
-        elHintBtn.classList.add('clicked')
+        elHintBtn.classList.add('disabled')
     }
 }
 
@@ -66,7 +66,6 @@ function showHint(cellI, cellJ) {
         }
     }, 1500)
 }
-
 
 
 function resetHintsPanel() {
