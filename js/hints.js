@@ -7,15 +7,14 @@ var gIsHintMode = false
 function giveHint(ev) {
 
     if (!gIsHintsAvailable || gGame.isGameOver || !gGame.isOn) return
-    // ev.stopPropagation()
-    // ev.preventDefault()
+
     gIsHintMode = true
     const elHintLights = document.querySelectorAll('.hint-light')
 
     for (var i = 0; i < elHintLights.length; i++) {
         if (elHintLights[i].src.includes('hint-on.png')) {
             elHintLights[i].src = 'images/hint-off.png'
-            // showHint(i, j)
+
             gHintsCounter--
             console.log('hints left', gHintsCounter)
             break
@@ -23,7 +22,7 @@ function giveHint(ev) {
     }
 
     if (gHintsCounter === 0) {
-        gIsHintsAvailable = false
+        // gIsHintsAvailable = false
         var elHintBtn = document.querySelector('.btn-hint')
         elHintBtn.disabled = true
         elHintBtn.classList.add('disabled')
@@ -32,6 +31,7 @@ function giveHint(ev) {
 
 function showHint(cellI, cellJ) {
 
+    gIsHintMode = false
     var cellsToReveal = []
 
     for (var i = cellI - 1; i <= cellI + 1; i++) {
@@ -71,9 +71,10 @@ function showHint(cellI, cellJ) {
 function resetHintsPanel() {
     gHintsCounter = 3
     gIsHintsAvailable = true
+    gIsHintMode = false
     const elHintBtn = document.querySelector('.btn-hint')
     elHintBtn.disabled = false
-    elHintBtn.classList.remove('clicked')
+    elHintBtn.classList.remove('disabled')
 
     const elHintLights = document.querySelectorAll('.hint-light')
     for (var i = 0; i < elHintLights.length; i++) {

@@ -25,7 +25,7 @@ function onInit() {
 
 function onCellClicked(elCell, i, j) {
     if (gGame.isGameOver) return
-    if (gIsHintMode && gHintsCounter > 0) {
+    if (gIsHintMode) {
         gIsHintMode = false
         showHint(i, j)
         return
