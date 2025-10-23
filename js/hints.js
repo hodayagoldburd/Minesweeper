@@ -39,8 +39,7 @@ function showHint(cellI, cellJ) {
         for (var j = cellJ - 1; j <= cellJ + 1; j++) {
             if (j < 0 || j >= gBoard[i].length) continue
             var cell = gBoard[i][j]
-            if (!cell.isShown) {
-                // && !cell.isMarked 
+            if (!cell.isShown && !cell.isMarked) {
                 cellsToReveal.push({ i, j })
             }
         }
@@ -52,6 +51,7 @@ function showHint(cellI, cellJ) {
         var cell = gBoard[pos.i][pos.j]
         elCell.classList.add('revealed')
         if (cell.minesAroundCount > 0) elCell.innerText = cell.minesAroundCount
+        if (cell.isMine) elCell.innerText = '💣'
     }
 
     setTimeout(function () {
