@@ -27,6 +27,7 @@ function resetTimer() {
 }
 
 function saveBestTime(level) {
+    if (level === 'custom') return
     var timeInSeconds = Math.floor((Date.now() - gStartTime) / 1000)
     const key = 'bestTime_' + level
     const prevTime = localStorage.getItem(key)

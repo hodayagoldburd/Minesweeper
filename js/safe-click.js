@@ -8,7 +8,7 @@ function safeClick() {
     if (gSafeClicksLeft === 0 || !gGame.isOn) return
 
     gSafeClicksLeft--
-    gSafeClickBtn.textContent = `Safe clicks left: ${gSafeClicksLeft}`
+    document.getElementById('safe-click-count').innerText = gSafeClicksLeft
     if (gSafeClicksLeft === 0) {
         gSafeClickBtn.classList.add('disabled')
         gSafeClickBtn.disabled = true
@@ -38,6 +38,6 @@ function safeClick() {
 function resetSafeClickBtn() {
     gSafeClicksLeft = 3
     gSafeClickBtn.classList.remove('disabled')
-    gSafeClickBtn.textContent = `Safe clicks left: ${gSafeClicksLeft}`
+    document.getElementById('safe-click-count').innerText = gSafeClicksLeft
     gSafeClickBtn.disabled = false
 }

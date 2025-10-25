@@ -9,29 +9,39 @@
 </head>
 
 <body onload="onInit()">
-  <h1>Minesweeper</h1>
+
+  <h1 data-trans="title">Minesweeper</h1>
 
   <img id="smiley" src="images/neutral.jpg" alt="smiley" onclick="smileyClicked()" />
 
   <div class="game-wrapper">
     <div class="left-panel">
 
-      <button class="btn-safe-click" onclick="safeClick()">Safe clicks left: 3</button>
-      <button class="btn-hint" onclick="giveHint(event)">Hint</button>
-      <div class="hint-lights">
-        <img src="images/hint-on.png" class="hint-light">
-        <img src="images/hint-on.png" class="hint-light">
-        <img src="images/hint-on.png" class="hint-light">
-      </div>
-      <button id="exterminatorBtn" class="exterminatorBtn" onclick="exterminator()">Exterminator</button>
-      <button id="darkModeBtn" class="darkModeBtn" onclick="toggleDarkMode()">🌙 Dark Mode</button>
+      <button class="btn-safe-click" onclick="safeClick()">
+  <span data-trans="btn-safe-click">Safe clicks left: </span>
+  <span id="safe-click-count">3</span>
+</button>
+      <div class="hints-container">
+  <div data-trans="hints-label" class="hints-label" onclick="giveHint(event)">Hint</div>
+  <div class="hint-lights">
+    <img src="images/hint-off.png" alt="bulb-off" class="hint-light">
+    <img src="images/hint-off.png" alt="bulb-off" class="hint-light">
+    <img src="images/hint-off.png" alt="bulb-off" class="hint-light">
+  </div>
+</div>
+
+<button data-trans="mega-hint-btn" id="mega-hint-btn" class="mega-hint-btn" onclick="onMegaHintBtnClick()">Mega hint</button>
+      <button data-trans="exterminatorBtn" id="exterminatorBtn" class="exterminatorBtn" onclick="exterminator()">Exterminator</button>
+      <button id="englishBtn" class="englishBtn" onclick="setLanguage('en')">English</button>
+      <button id="hebrewBtn" class="hebrewBtn" onclick="setLanguage('he')">עברית</button>
+      
     </div>
 
     <div class="board-container"></div>
 
     <div class="right-panel">
       <div class="timer-container">
-        Timer: <span id="timer">0</span>
+        Timer: <span data-trans="timer" id="timer">0</span>
       </div>
       <div class="lives-container">
         <div class="lives-label" id="lives-label">Lives</div>
@@ -41,32 +51,40 @@
           <img src="images/heart.png" class="heart">
         </div>
       </div>
-
-      <div id="mines-left-container" class="mines-left-container">
+      <div data-trans="mines-left-container" id="mines-left-container" class="mines-left-container">
         Mines left: <span id="mines-left-number">2</span>
       </div>
+      <button data-trans="undoBtn" id="undoBtn" class="undoBtn" onclick="undoLastClick()">Undo</button>
+      <button  title="Reduces the lives left according to mines placed" data-trans="fairPlayBtn" id="fairPlayBtn" class="fairPlayBtn" onclick="fairPlayMode()">Fair play</button>
+      <button id="darkModeBtn" class="darkModeBtn" onclick="toggleDarkMode()">Dark mode 🌛</button>
     </div>
   </div>
 
   <div class="level-btns-container">
-    <h2 class="choose-difficulty-header">Choose game difficulty level:</h2>
+    <h2 data-trans="choose-difficulty-header" class="choose-difficulty-header">Choose game difficulty level:</h2>
 
     <div class="difficulty-level-btns">
-      <button class="btn-beginner" onclick="setDifficulty('beginner')">Beginner</button>
-      <button class="btn-medium" onclick="setDifficulty('medium')">Medium</button>
-      <button class="btn-expert" onclick="setDifficulty('expert')">Expert</button>
-      <button class="btn-custom" onclick="setDifficulty('custom')">Custom</button>
+      <button data-trans="btn-beginner" class="btn-beginner" onclick="setDifficulty('beginner')">Beginner</button>
+      <button data-trans="btn-medium" class="btn-medium" onclick="setDifficulty('medium')">Medium</button>
+      <button data-trans="btn-expert" class="btn-expert" onclick="setDifficulty('expert')">Expert</button>
+      <button data-trans="btn-custom" class="btn-custom" onclick="setDifficulty('custom')">Custom</button>
     </div>
   </div>
-<div class="best-times">
-  <p class="best-title">Best times:</p>
-  <div class="best-row">
-    <span>Beginner: <span id="bestTime_beginner">-</span>s</span>
-    <span>Medium: <span id="bestTime_medium">-</span>s</span>
-    <span>Expert: <span id="bestTime_expert">-</span>s</span>
+  <div class="best-times">
+    <p data-trans="best-title" class="best-title">Best results:</p>
+    <div class="best-row">
+      <span data-trans="beginner">Beginner: </span>
+        <span id="bestTime_beginner">-</span>
+     
+      <span data-trans="medium">Medium: </span>
+      <span id="bestTime_medium">-</span>
+    
+      <span data-trans="expert">Expert: </span>
+      <span id="bestTime_expert">-</span>
+    
+    </div>
   </div>
-</div>
-  <h3>Hodaya Goldburd.</h3>
+  <h3 data-trans="signature" title="this is me" class="signature">Hodaya Goldburd.</h3>
 
 
   <script src="js/util.js"></script>
@@ -74,10 +92,16 @@
   <script src="js/game.js"></script>
   <script src="js/mines.js"></script>
   <script src="js/smiley.js"></script>
-  <script src="js/timer.js"></script>
   <script src="js/hints.js"></script>
   <script src="js/safe-click.js"></script>
   <script src="js/exterminator.js"></script>
+  <script src="js/fair-play.js"></script>
+  <script src="js/language-support.js"></script>
+  <script src="js/dark-mode.js"></script>
+  <script src="js/timer.js"></script>
+  <script src="js/mega-hint.js"></script>
+  <script src="js/undo.js"></script>
+  
 </body>
 
 </html>

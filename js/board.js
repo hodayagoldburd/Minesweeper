@@ -3,7 +3,8 @@
 var gBoard = []
 var gLevel = {
     SIZE: 4,
-    MINES: 2
+    MINES: 2,
+    NAME: 'beginner'
 }
 
 function buildBoard() {
@@ -27,7 +28,7 @@ function buildBoard() {
 function renderBoard(board) {
 
     gLives = 3
-    console.log('lives left:', gLives)
+    // console.log('lives left:', gLives)
     livesDisplayUpdate()
     resetHintsPanel()
     resetSafeClickBtn()
@@ -63,16 +64,20 @@ function setDifficulty(level) {
     if (level === 'beginner') {
         gLevel.SIZE = 4
         gLevel.MINES = 2
+        gLevel.NAME = 'beginner'
     } else if (level === 'medium') {
         gLevel.SIZE = 8
         gLevel.MINES = 14
+        gLevel.NAME = 'medium'
     } else if (level === 'expert') {
         gLevel.SIZE = 12
         gLevel.MINES = 32
+        gLevel.NAME = 'expert'
     } else if (level === 'custom'){
         gLevel.SIZE = +prompt('Choose a board size:')
         gLevel.MINES = +prompt('How many mines to place?')
-        if (gLevel.MINES >= gLevel.SIZE || gLevel.SIZE === 1 || !gLevel.MINES) return
+        gLevel.NAME = 'custom'
+        if (gLevel.MINES >= Math.pow(gLevel.SIZE, 2) || gLevel.SIZE === 1 || !gLevel.MINES || gLevel.SIZE > 45) return
     }
     gMinesLeftCount = gLevel.MINES
     updateMinesLeftDisplay()

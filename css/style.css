@@ -18,6 +18,20 @@ body.dark-mode h1 {
   color: antiquewhite;
 }
 
+h3 {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #004d66;
+  font-size: 12px;
+  text-align: center;
+  font-weight: bold;
+  padding-top: 26px;
+
+}
+
+body.dark-mode h3 {
+  color: antiquewhite;
+}
+
 .game-wrapper {
   margin: 0 auto;
   text-align: center;
@@ -30,18 +44,6 @@ body.dark-mode h1 {
   margin: 0;
 }
 
-.left-panel {
-  width: 150px;
-
-}
-
-.right-panel {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 15px;
-  min-width: 150px;
-}
 
 .board-and-side {
   display: flex;
@@ -53,6 +55,7 @@ table {
   margin: 9px auto;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
+  color: #004d66;
 }
 
 td.cell {
@@ -79,6 +82,9 @@ td.cell.revealed {
   background-color: burlywood !important;
 }
 
+
+
+
 #smiley {
   max-width: 36px;
   max-height: 36px;
@@ -93,16 +99,17 @@ td.cell.revealed {
   transition: transform 0.15s ease;
 }
 
+.hints-container,
 .lives-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 }
 
 .lives-hearts {
   display: flex;
-  gap: 8px;
+  /* gap: 8px; */
   border: 2px solid #b0d0c0;
   border-radius: 12px;
   padding: 6px 12px;
@@ -112,13 +119,14 @@ td.cell.revealed {
 .heart {
   width: 24px;
   height: 24px;
+  border-radius: 3px;
 }
 
 .level-btns-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  /* margin-top: 8px; */
 }
 
 .choose-difficulty-header {
@@ -148,10 +156,10 @@ body.dark-mode .choose-difficulty-header {
   padding: 9px 18px;
   font-size: 13px;
   font-family: Arial, sans-serif;
-  font-weight: bold ;
+  font-weight: bold;
   cursor: pointer;
   transition: 0.2s;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 
@@ -161,13 +169,17 @@ body.dark-mode .choose-difficulty-header {
 }
 
 .btn-hint.disabled {
-
-text-decoration: line-through 1.5px;
-cursor: not-allowed;
+  text-decoration: line-through 1.5px;
+  cursor: not-allowed;
 }
 
-.left-panel {
+.mega-hint-btn.disabled {
+  text-decoration: line-through 1.5px;
+  cursor: not-allowed;
+}
 
+.right-panel,
+.left-panel {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -175,10 +187,12 @@ cursor: not-allowed;
   min-width: 150px;
 }
 
+
+
 .hint-lights {
 
   display: flex;
-  gap: 8px;
+  /* gap: 8px; */
   border: 2px solid #b0d0c0;
   border-radius: 12px;
   padding: 6px 12px;
@@ -192,9 +206,10 @@ cursor: not-allowed;
 }
 
 
-.disabled {
-  background-color: gray;
+.hints-label.disabled {
+ 
   cursor: not-allowed;
+  pointer-events: none;
 }
 
 .safe-hint {
@@ -207,42 +222,40 @@ cursor: not-allowed;
   text-decoration: line-through 1.5px;
 }
 
+.undoBtn.disabled {
+  cursor: not-allowed;
+  text-decoration: line-through 1.5px;
+}
+
 .mines-left-container,
+.hints-label,
 .lives-label,
+.fairPlayBtn,
 .timer-container,
 .btn-hint,
+.mega-hint-btn,
 .darkModeBtn,
 .btn-safe-click,
-.exterminatorBtn {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 12px;
-    min-width: 140px;
-    background: linear-gradient(to right, #7fe0f0, #c0e4db);
-    border: 2px solid #b0d0c0;
-    border-radius: 12px;
-    padding: 6px 12px;
-    margin-bottom: 3px;
-    font-weight: bold;
-    color: #004d66;
-    text-align: center;
-    cursor: pointer;
-    box-sizing: border-box;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-h3 {
+.exterminatorBtn,
+.undoBtn,
+.englishBtn,
+.hebrewBtn {
   font-family: Arial, Helvetica, sans-serif;
-  color: #004d66;
   font-size: 12px;
-  text-align: center;
+  min-width: 140px;
+  background: linear-gradient(to right, #7fe0f0, #c0e4db);
+  border: 2px solid #b0d0c0;
+  border-radius: 12px;
+  padding: 6px 12px;
+  /* margin-bottom: 3px; */
   font-weight: bold;
-  padding-top: 26px;
-
+  color: #004d66;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-body.dark-mode h3 {
-  color: antiquewhite;
-}
 
 .best-times {
   display: inline-block;
@@ -254,7 +267,7 @@ body.dark-mode h3 {
   font-weight: bold;
   color: #004d66;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   margin: 10px auto;
   text-align: center;
 

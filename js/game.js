@@ -19,12 +19,18 @@ function onInit() {
     resetHintsPanel()
     resetTimer()
     resetExterminatorBtn()
+    resetFairPlayBtn()
+    checkFairModeAvailable()
+    initDarkModeStatus()
     loadBestTime()
     renderBestTimes()
+    resetMegaHintBtn()
+    resetUndoBtn()
 }
 
 function onCellClicked(elCell, i, j) {
     if (gGame.isGameOver) return
+
     if (gIsHintMode) {
         gIsHintMode = false
         showHint(i, j)
@@ -34,17 +40,28 @@ function onCellClicked(elCell, i, j) {
         gFirstClick = false
         gGame.isOn = true
         startTimer()
-
-
+        enableMegaHintBtn()
         setMines(gBoard, gLevel.MINES, { i, j })
         setMinesNegsCount(gBoard)
-        console.table(gBoard)
-
-
     }
+
+
+    if (gMegaHintActive) {
+        handleMegaHint(i, j)
+        return
+    }
+
+
+    // console.table(gBoard)
+
+    gLastClickedCell = { el: elCell, i: i, j: j, content: elCell.innerText }
+    gUndoAvailable = true
+
     cellReveal(elCell, i, j)
     checkGameOver()
+
 }
+
 
 var gLives = 3
 function livesDisplayUpdate() {
@@ -78,7 +95,7 @@ function cellReveal(elCell, i, j) {
         if (gLives > 0) {
             elCell.innerText = MINE
             gLives--
-            console.log('lives left:', gLives)
+            // console.log('lives left:', gLives)
             livesDisplayUpdate()
             setTimeout(() => {
                 elCell.innerText = ''
@@ -130,7 +147,7 @@ function onCellMarked(elCell, i, j) {
     } else {
         elCell.innerText = ''
         gMinesLeftCount++
-        console.log('mines left: ', gMinesLeftCount)
+        // console.log('mines left: ', gMinesLeftCount)
         updateMinesLeftDisplay()
     }
 
@@ -154,14 +171,10 @@ function checkGameOver() {
         stopTimer()
 
         updateSmiley('happy')
-        // console.log('You won!')
         gLabel.innerText = "You won!"
-        var level
-        if (gLevel.SIZE === 4) level = 'beginner'
-        else if (gLevel.SIZE === 8) level = 'medium'
-        else level = 'expert'
+        if (gLevel.NAME !== 'custom')
 
-        saveBestTime(level)
+            saveBestTime(gLevel.NAME)
         loadBestTime()
         renderBestTimes()
     }
@@ -183,16 +196,5 @@ function expandReveal(board, elCell, cellI, cellJ) {
 
             cellReveal(elNeighborCell, i, j)
         }
-    }
-}
-
-function toggleDarkMode() {
-
-    document.body.classList.toggle('dark-mode')
-    const btn = document.getElementById('darkModeBtn')
-    if (document.body.classList.contains('dark-mode')) {
-        btn.innerText = '☀️ Light Mode'
-    } else {
-        btn.innerText = '🌙 Dark Mode'
     }
 }
